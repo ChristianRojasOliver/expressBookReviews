@@ -11,4 +11,15 @@ let books = {
       10: {"author": "Samuel Beckett","title": "Molloy, Malone Dies, The Unnamable, the trilogy", "reviews": {} }
 }
 
-module.exports=books;
+function getAllAuthors(booksObj) {
+    const allAuthors = new Set(); 
+    for (const bookId in booksObj) {
+      allAuthors.add(booksObj[bookId].author);
+    }
+    return Array.from(allAuthors); // Convert Set to Array
+  }
+
+  module.exports = { 
+    books, 
+    getAllAuthors 
+  };
