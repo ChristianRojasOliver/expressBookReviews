@@ -19,7 +19,16 @@ function getAllAuthors(booksObj) {
     return Array.from(allAuthors); // Convert Set to Array
   }
 
+  function getAllTitles(booksObj) {
+    const allTitle = new Set(); 
+    for (const bookId in booksObj) {
+      allTitle.add(booksObj[bookId].title);
+    }
+    return Array.from(allTitle); // Convert Set to Array
+  }
+
   module.exports = { 
     books, 
-    getAllAuthors 
+    getAllAuthors,
+    getAllTitles 
   };
