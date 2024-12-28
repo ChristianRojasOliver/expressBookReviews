@@ -1,7 +1,7 @@
 let books = {
-      1: {"author": "Chinua Achebe","title": "Things Fall Apart", "reviews": {}, "isbn": "0307275211" },
-      2: {"author": "Hans Christian Andersen","title": "Fairy tales", "reviews": {}, "isbn": "0679725960" },
-      3: {"author": "Dante Alighieri","title": "The Divine Comedy", "reviews": {} },
+      1: {"author": "Chinua Achebe","title": "Things Fall Apart", "reviews": {"user": "user1", "rating": 5, "comment": "A masterpiece!"}, "isbn": "0307275211" },
+      2: {"author": "Hans Christian Andersen","title": "Fairy tales", "reviews": {"user": "user2", "rating": 4, "comment": "Epic story."}, "isbn": "0679725960" },
+      3: {"author": "Dante Alighieri","title": "The Divine Comedy", "reviews": {"user": "user3", "rating": 4.5, "comment": "Thought-provoking."} },
       4: {"author": "Unknown","title": "The Epic Of Gilgamesh", "reviews": {} },
       5: {"author": "Unknown","title": "The Book Of Job", "reviews": {} },
       6: {"author": "Unknown","title": "One Thousand and One Nights", "reviews": {} },
@@ -27,8 +27,16 @@ function getAllAuthors(booksObj) {
     return Array.from(allTitle); // Convert Set to Array
   }
 
+  function getAllReviews(booksObj) {
+    const allReview = new Set();
+    for ( const bookId in booksObj) {
+        allReview.add(booksObj [bookId])
+    }
+  }
+
   module.exports = { 
     books, 
     getAllAuthors,
-    getAllTitles 
+    getAllTitles,
+    getAllReviews 
   };
