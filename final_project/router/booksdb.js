@@ -32,6 +32,7 @@ function getAllAuthors(booksObj) {
     for ( const bookId in booksObj) {
         allReview.add(booksObj [bookId])
     }
+    return Array.from(allReview); // Convert Set to Array
   }
 
   module.exports = { 
