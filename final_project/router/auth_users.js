@@ -29,7 +29,7 @@ regd_users.post("/login", (req, res) => {
         });
     }
 
-    if (!authenticatedUser(username,password)) {
+    if (!authenticatedUser(username, password)) {
         return res.status(401).json({
             error: "Invalid username or password"
         });
@@ -71,11 +71,47 @@ const verifyToken = (req, res, next) => {
 }
 
 // Add a book review
-regd_users.put("/auth/review/:isbn", (req, res) => {
-    //Write your code here
-    return res.status(300).json({ message: "Yet to be implemented" });
-});
+regd_users.put("/auth/review/:isbn", verifyToken, (req, res) => {
+    try {
+        const isbn = req.params.isbn;
+        const review = req.params.review;
+        const username = req.params.username;
 
-module.exports.authenticated = regd_users;
-module.exports.isValid = isValid;
-module.exports.users = users;
+        if (!isbn || !review) {
+            return res.status(400).json({
+                error: "ISBN and review are required"
+            });
+        }
+
+        if (!books[isbn]) {
+            return res.status(404).json({
+                error: "Book not found"
+            });
+        }
+
+        if (!books[isbn].reviews) {
+            books[isbn].reviews = {};
+        };
+
+        books[isbn].reviews[username] = review;
+        delete books[isbn].reviews[username];
+
+        return res.status(200).json({
+            message: "Review updated or deleted successfully",
+            book: {
+                isbn: isbn,
+                reviews: books[isbn].reviews
+            }
+        });
+    } catch (error) {
+        console.error("Review error:", error);
+        return res.status(500).json({
+            error: "Error processing review or deleting review"
+        });
+    }
+
+})
+
+    module.exports.authenticated = regd_users;
+    module.exports.isValid = isValid;
+    module.exports.users = users;
