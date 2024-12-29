@@ -97,7 +97,7 @@ public_users.get('/author/:author', async (req, res) => {
 });
 
 // Get all books based on title
-public_users.get('/title/:title',function (req, res) {
+public_users.get('/title/:title', async (req, res) => {
     try {
         const allTitles = getAllTitles(books);
         res.status(200).json(allTitles); 
